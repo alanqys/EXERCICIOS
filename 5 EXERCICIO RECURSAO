@@ -1,0 +1,13 @@
+public class ContagemDigitos {
+    public static void main(String[] args) {
+        int numero = 12345;
+        System.out.println(contar(numero));
+    }
+
+    public static int contar(int n) {
+        if (n < 10) {
+            return 1;
+        }
+        return 1 + contar(n / 10);
+    }
+}
