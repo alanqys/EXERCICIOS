@@ -1,0 +1,48 @@
+class No {
+    Musica elemento;
+    No proximo;
+    No(Musica elemento) { this.elemento = elemento; }
+}
+
+class Musica {
+    String titulo, artista;
+    Musica(String t, String a) { titulo = t; artista = a; }
+    @Override public String toString() { return titulo + " - " + artista; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Musica m) {
+        No celula = new No(m);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public boolean contem(String titulo) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.titulo.equalsIgnoreCase(titulo)) return true;
+        return false;
+    }
+
+    public int getTamanho() { return tamanho; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio02 {
+    public static void main(String[] args) {
+        Lista playlist = new Lista();
+        for(int i=1; i<=6; i++) playlist.adiciona(new Musica("Musica "+i, "Artista "+i));
+        System.out.print(playlist);
+        System.out.println("Contém 'Musica 3'? " + playlist.contem("Musica 3"));
+        System.out.println("Total: " + playlist.getTamanho());
+    }
+}
