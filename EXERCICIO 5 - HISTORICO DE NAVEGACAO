@@ -1,0 +1,50 @@
+class No {
+    Pagina elemento;
+    No proximo;
+    No(Pagina elemento) { this.elemento = elemento; }
+}
+
+class Pagina {
+    String titulo, url;
+    Pagina(String t, String u) { titulo = t; url = u; }
+    @Override public String toString() { return titulo + " - " + url; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Pagina p) {
+        No celula = new No(p);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public boolean contem(String url) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.url.equals(url)) return true;
+        return false;
+    }
+
+    public Pagina pegaUltimo() { return ultimo.elemento; }
+    public int getTamanho() { return tamanho; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio05 {
+    public static void main(String[] args) {
+        Lista historico = new Lista();
+        for(int i=1; i<=8; i++) historico.adiciona(new Pagina("Site "+i, "url"+i+".com"));
+        System.out.print(historico);
+        System.out.println("Visitou 'url4.com'? " + historico.contem("url4.com"));
+        System.out.println("Última: " + historico.pegaUltimo());
+        System.out.println("Total: " + historico.getTamanho());
+    }
+}
