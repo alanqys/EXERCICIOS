@@ -1,0 +1,16 @@
+public class Palindromo {
+    public static void main(String[] args) {
+        String palavra = "arara";
+        System.out.println(isPalindromo(palavra));
+    }
+
+    public static boolean isPalindromo(String s) {
+        if (s.length() <= 1) {
+            return true;
+        }
+        if (s.charAt(0) != s.charAt(s.length() - 1)) {
+            return false;
+        }
+        return isPalindromo(s.substring(1, s.length() - 1));
+    }
+}
