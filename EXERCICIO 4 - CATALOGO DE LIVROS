@@ -1,0 +1,43 @@
+class No {
+    Livro elemento;
+    No proximo;
+    No(Livro elemento) { this.elemento = elemento; }
+}
+
+class Livro {
+    String titulo, autor; int ano;
+    Livro(String t, String a, int y) { titulo = t; autor = a; ano = y; }
+    @Override public String toString() { return titulo + " (" + ano + ")"; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Livro l) {
+        No celula = new No(l);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public Livro pegaPrimeiro() { return inicio.elemento; }
+    public Livro pegaUltimo() { return ultimo.elemento; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio04 {
+    public static void main(String[] args) {
+        Lista catalogo = new Lista();
+        for(int i=1; i<=5; i++) catalogo.adiciona(new Livro("Livro "+i, "Autor "+i, 2020+i));
+        System.out.print(catalogo);
+        System.out.println("Primeiro: " + catalogo.pegaPrimeiro());
+        System.out.println("Último: " + catalogo.pegaUltimo());
+    }
+}
