@@ -1,0 +1,61 @@
+class No {
+    Produto elemento;
+    No proximo;
+    No(Produto elemento) { this.elemento = elemento; }
+}
+
+class Produto {
+    String nome; double preco; int qtd;
+    Produto(String n, double p, int q) { nome = n; preco = p; qtd = q; }
+    @Override public String toString() { return nome + " - R$" + preco + " (Estoque: " + qtd + ")"; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Produto p) {
+        No celula = new No(p);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public Produto pega(int pos) {
+        No atual = inicio;
+        for (int i = 0; i < pos; i++) atual = atual.proximo;
+        return atual.elemento;
+    }
+
+    public boolean contem(String nome) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.nome.equalsIgnoreCase(nome)) return true;
+        return false;
+    }
+
+    public Produto pegaPrimeiro() { return inicio.elemento; }
+    public Produto pegaUltimo() { return ultimo.elemento; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio07 {
+    public static void main(String[] args) {
+        Lista estoque = new Lista();
+        estoque.adiciona(new Produto("Teclado", 150.0, 10));
+        estoque.adiciona(new Produto("Mouse", 80.0, 20));
+        estoque.adiciona(new Produto("Monitor", 900.0, 5));
+        estoque.adiciona(new Produto("Gabinete", 400.0, 8));
+        estoque.adiciona(new Produto("Fone", 200.0, 15));
+        System.out.print(estoque);
+        System.out.println("Posição 2: " + estoque.pega(2));
+        System.out.println("Tem Mouse? " + estoque.contem("Mouse"));
+        System.out.println("Primeiro: " + estoque.pegaPrimeiro());
+        System.out.println("Último: " + estoque.pegaUltimo());
+    }
+}
