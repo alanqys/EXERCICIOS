@@ -1,0 +1,13 @@
+public class SomaVetor {
+    public static void main(String[] args) {
+        int[] vetor = {1, 2, 3, 4};
+        System.out.println(somar(vetor, 0));
+    }
+
+    public static int somar(int[] v, int i) {
+        if (i == v.length) {
+            return 0;
+        }
+        return v[i] + somar(v, i + 1);
+    }
+}
