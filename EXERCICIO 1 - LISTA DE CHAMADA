@@ -1,0 +1,49 @@
+class No {
+    Aluno elemento;
+    No proximo;
+    No(Aluno elemento) { this.elemento = elemento; }
+}
+
+class Aluno {
+    String nome, matricula;
+    Aluno(String n, String m) { nome = n; matricula = m; }
+    @Override public String toString() { return "Nome: " + nome + " | Mat: " + matricula; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Aluno a) {
+        No celula = new No(a);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public Aluno pegaPrimeiro() { return inicio.elemento; }
+    public Aluno pegaUltimo() { return ultimo.elemento; }
+    public int getTamanho() { return tamanho; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio01 {
+    public static void main(String[] args) {
+        Lista lista = new Lista();
+        lista.adiciona(new Aluno("João", "101"));
+        lista.adiciona(new Aluno("Maria", "102"));
+        lista.adiciona(new Aluno("José", "103"));
+        lista.adiciona(new Aluno("Ana", "104"));
+        lista.adiciona(new Aluno("Pedro", "105"));
+        System.out.print(lista);
+        System.out.println("Primeiro: " + lista.pegaPrimeiro());
+        System.out.println("Último: " + lista.pegaUltimo());
+        System.out.println("Total: " + lista.getTamanho());
+    }
+}
