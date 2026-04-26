@@ -1,0 +1,20 @@
+public class MaiorVetor {
+    public static void main(String[] args) {
+        int[] vetor = {3, 9, 2, 15, 7};
+        System.out.println(buscarMaior(vetor, 0));
+    }
+
+    public static int buscarMaior(int[] v, int i) {
+        if (i == v.length - 1) {
+            return v[i];
+        }
+        
+        int maiorResto = buscarMaior(v, i + 1);
+        
+        if (v[i] > maiorResto) {
+            return v[i];
+        } else {
+            return maiorResto;
+        }
+    }
+}
