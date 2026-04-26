@@ -1,0 +1,55 @@
+class No {
+    Item elemento;
+    No proximo;
+    No(Item elemento) { this.elemento = elemento; }
+}
+
+class Item {
+    String nome; int qtd;
+    Item(String n, int q) { nome = n; qtd = q; }
+    @Override public String toString() { return nome + " | Qtd: " + qtd; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Item i) {
+        No celula = new No(i);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public Item pega(int pos) {
+        No atual = inicio;
+        for (int i = 0; i < pos; i++) atual = atual.proximo;
+        return atual.elemento;
+    }
+
+    public boolean contem(String nome) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.nome.equalsIgnoreCase(nome)) return true;
+        return false;
+    }
+
+    public int getTamanho() { return tamanho; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio03 {
+    public static void main(String[] args) {
+        Lista compras = new Lista();
+        for(int i=1; i<=7; i++) compras.adiciona(new Item("Produto "+i, i));
+        System.out.print(compras);
+        System.out.println("Item na posição 3: " + compras.pega(3));
+        System.out.println("Tem 'Produto 5'? " + compras.contem("Produto 5"));
+        System.out.println("Total: " + compras.getTamanho());
+    }
+}
