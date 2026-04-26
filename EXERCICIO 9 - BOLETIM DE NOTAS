@@ -1,0 +1,59 @@
+class No {
+    Disciplina elemento;
+    No proximo;
+    No(Disciplina elemento) { this.elemento = elemento; }
+}
+
+class Disciplina {
+    String nome; double nota;
+    Disciplina(String n, double nt) { nome = n; nota = nt; }
+    @Override public String toString() { return nome + " | Nota: " + nota; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Disciplina d) {
+        No celula = new No(d);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public Disciplina pega(int pos) {
+        No atual = inicio;
+        for (int i = 0; i < pos; i++) atual = atual.proximo;
+        return atual.elemento;
+    }
+
+    public boolean contem(String nome) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.nome.equalsIgnoreCase(nome)) return true;
+        return false;
+    }
+
+    public int getTamanho() { return tamanho; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio09 {
+    public static void main(String[] args) {
+        Lista boletim = new Lista();
+        boletim.adiciona(new Disciplina("Matematica", 8.0));
+        boletim.adiciona(new Disciplina("Fisica", 7.5));
+        boletim.adiciona(new Disciplina("Artes", 10.0));
+        boletim.adiciona(new Disciplina("Historia", 9.0));
+        boletim.adiciona(new Disciplina("POO", 9.5));
+        System.out.print(boletim);
+        System.out.println("Posição 2: " + boletim.pega(2));
+        System.out.println("Tem Fisica? " + boletim.contem("Fisica"));
+        System.out.println("Total: " + boletim.getTamanho());
+    }
+}
