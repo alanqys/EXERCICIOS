@@ -1,0 +1,48 @@
+class No {
+    Convidado elemento;
+    No proximo;
+    No(Convidado elemento) { this.elemento = elemento; }
+}
+
+class Convidado {
+    String nome, cpf;
+    Convidado(String n, String c) { nome = n; cpf = c; }
+    @Override public String toString() { return nome + " | CPF: " + cpf; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Convidado c) {
+        No celula = new No(c);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public boolean contem(String nome) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.nome.equalsIgnoreCase(nome)) return true;
+        return false;
+    }
+
+    public int getTamanho() { return tamanho; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio06 {
+    public static void main(String[] args) {
+        Lista convidados = new Lista();
+        for(int i=1; i<=6; i++) convidados.adiciona(new Convidado("Convidado "+i, "00"+i));
+        System.out.print(convidados);
+        System.out.println("Convidado 2 está? " + convidados.contem("Convidado 2"));
+        System.out.println("Total: " + convidados.getTamanho());
+    }
+}
