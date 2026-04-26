@@ -1,0 +1,48 @@
+class No {
+    Contato elemento;
+    No proximo;
+    No(Contato elemento) { this.elemento = elemento; }
+}
+
+class Contato {
+    String nome, tel;
+    Contato(String n, String t) { nome = n; tel = t; }
+    @Override public String toString() { return nome + " : " + tel; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Contato c) {
+        No celula = new No(c);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public boolean contem(String nome) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.nome.equalsIgnoreCase(nome)) return true;
+        return false;
+    }
+
+    public int getTamanho() { return tamanho; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio08 {
+    public static void main(String[] args) {
+        Lista agenda = new Lista();
+        for(int i=1; i<=6; i++) agenda.adiciona(new Contato("Contato "+i, "999-0"+i));
+        System.out.print(agenda);
+        System.out.println("Existe 'Contato 4'? " + agenda.contem("Contato 4"));
+        System.out.println("Total: " + agenda.getTamanho());
+    }
+}
