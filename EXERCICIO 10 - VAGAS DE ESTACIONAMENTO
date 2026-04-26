@@ -1,0 +1,54 @@
+class No {
+    Carro elemento;
+    No proximo;
+    No(Carro elemento) { this.elemento = elemento; }
+}
+
+class Carro {
+    String placa, modelo;
+    Carro(String p, String m) { placa = p; modelo = m; }
+    @Override public String toString() { return modelo + " [" + placa + "]"; }
+}
+
+class Lista {
+    No inicio, ultimo;
+    int tamanho = 0;
+
+    public void adiciona(Carro c) {
+        No celula = new No(c);
+        if (tamanho == 0) inicio = celula;
+        else ultimo.proximo = celula;
+        ultimo = celula;
+        tamanho++;
+    }
+
+    public boolean contem(String placa) {
+        for (No n = inicio; n != null; n = n.proximo)
+            if (n.elemento.placa.equals(placa)) return true;
+        return false;
+    }
+
+    public Carro pegaPrimeiro() { return inicio.elemento; }
+    public Carro pegaUltimo() { return ultimo.elemento; }
+
+    @Override public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (No n = inicio; n != null; n = n.proximo) s.append(n.elemento).append("\n");
+        return s.toString();
+    }
+}
+
+public class Exercicio10 {
+    public static void main(String[] args) {
+        Lista vagas = new Lista();
+        vagas.adiciona(new Carro("ABC-1234", "Fusca"));
+        vagas.adiciona(new Carro("XYZ-0000", "Gol"));
+        vagas.adiciona(new Carro("KKK-1111", "Onix"));
+        vagas.adiciona(new Carro("PPP-2222", "Uno"));
+        vagas.adiciona(new Carro("JJJ-3333", "Civic"));
+        System.out.print(vagas);
+        System.out.println("Carro ABC-1234 está? " + vagas.contem("ABC-1234"));
+        System.out.println("Primeiro: " + vagas.pegaPrimeiro());
+        System.out.println("Último: " + vagas.pegaUltimo());
+    }
+}
